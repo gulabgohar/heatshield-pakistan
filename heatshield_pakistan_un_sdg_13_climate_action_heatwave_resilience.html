@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HeatShield Pakistan — Community Engagement Initiative for UN SDG 13 (Climate Action &amp; Heatwave Resilience)</title>
+  <meta name="description" content="University Community Engagement Initiative aligned with UN Sustainable Development Goal 13 (Climate Action) — Heatwave awareness, interactive Heat Index calculator, rapid cooling first aid, and grassroots resilience across Pakistan." />
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            slateNavy: '#0F172A',
+            warmPaper: '#FAFAF9',
+            terracotta: '#EA580C',
+            sdgGreen: '#059669',
+            sosRed: '#DC2626',
+          },
+          boxShadow: {
+            'civic': '0 12px 32px -10px rgba(15, 23, 42, 0.08)',
+            'civic-lg': '0 20px 45px -15px rgba(15, 23, 42, 0.14)',
+            'amber-glow': '0 12px 28px -6px rgba(234, 88, 12, 0.35)',
+            'green-glow': '0 12px 28px -6px rgba(5, 150, 105, 0.32)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #FAFAF9;
+      color: #0F172A;
+    }
+
+    /* Subtle Civic-Tech Thermal Mesh Backdrop */
+    .hero-backdrop {
+      background-color: #FAFAF9;
+      background-image:
+        radial-gradient(at 90% 10%, rgba(234, 88, 12, 0.13) 0px, transparent 52%),
+        radial-gradient(at 8% 88%, rgba(5, 150, 105, 0.11) 0px, transparent 52%),
+        radial-gradient(at 50% 35%, rgba(254, 243, 199, 0.45) 0px, transparent 65%);
+    }
+
+    /* Custom Range Sliders for Interactive Heat Calculator */
+    input[type="range"].civic-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"].civic-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 4px solid #EA580C;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.25);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    input[type="range"].civic-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.12);
+    }
+
+    input[type="range"].humidity-track::-webkit-slider-thumb {
+      border-color: #0284C7;
+    }
+
+    /* Decorative Academic & UN SDG Certificate Preview Frame */
+    .certificate-card {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 52%, #ECFDF5 100%);
+      border: 2px solid #EA580C;
+      box-shadow: inset 0 0 0 6px #FFFFFF, inset 0 0 0 8px rgba(5, 150, 105, 0.35);
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificate-preview-box, #certificate-preview-box * {
+        visibility: visible;
+      }
+      #certificate-preview-box {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-orange-200 selection:text-slate-900">
+
+  <!-- =====================================================================
+       TOP NATIONAL HEATWAVE ALERT & UN SDG 13 RIBBON
+       ===================================================================== -->
+  <div class="bg-[#0F172A] text-white text-xs py-2.5 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 text-center sm:text-left">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#EA580C] text-white shrink-0">
+          <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+          <span>PMD / NDMA Advisory</span>
+        </span>
+        <p class="text-slate-200 font-medium">
+          Peak solar radiation hours (11:00 AM – 4:00 PM) across Punjab &amp; Sindh require hydration, shade protection, and early heatstroke vigilance.
+        </p>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-slate-300 shrink-0">
+        <span class="hidden md:inline font-semibold text-emerald-400">UN SDG 13 • Climate Action</span>
+        <button onclick="openSosModal()" class="underline decoration-red-400 hover:text-red-300 font-bold transition">
+          Emergency Helplines (1122)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       1. STICKY GLASSMORPHIC NAVBAR + EMERGENCY SOS BUTTON
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Brand Logo -->
+        <a href="#" class="flex items-center gap-3 group focus:outline-none">
+          <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-[#0F172A] p-2 flex items-center justify-center shadow-md border border-slate-700 group-hover:scale-105 transition-transform">
+            <!-- Custom Inline SVG Sun-Shield Emblem -->
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" fill="rgba(5, 150, 105, 0.18)" />
+              <circle cx="12" cy="11" r="3" stroke="#EA580C" fill="#EA580C" />
+              <path d="M12 6v1M12 15v1M7 11h1M16 11h1" stroke="#F59E0B" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-display font-extrabold text-base sm:text-lg tracking-tight text-[#0F172A]">
+                HeatShield <span class="text-[#EA580C]">Pakistan</span>
+              </span>
+              <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-[#059669] border border-emerald-200">
+                UN SDG 13 Initiative
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium hidden sm:block">
+              Community Engagement &amp; Heatwave Resilience Platform
+            </p>
+          </div>
+        </a>
+
+        <!-- Desktop Smooth Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600" aria-label="Primary Navigation">
+          <a href="#crisis-data" class="hover:text-[#EA580C] transition">Crisis Data</a>
+          <a href="#un-sdgs" class="hover:text-[#EA580C] transition">UN SDGs</a>
+          <a href="#heat-calculator" class="hover:text-[#EA580C] transition">Heat Calculator</a>
+          <a href="#first-aid" class="hover:text-[#EA580C] transition">First Aid</a>
+          <a href="#project-roadmap" class="hover:text-[#EA580C] transition">Project Roadmap</a>
+          <a href="#pledge-certificate" class="hover:text-[#EA580C] transition">Pledge &amp; Certificate</a>
+        </nav>
+
+        <!-- Right Controls: SOS 1122 Button + Mobile Hamburger -->
+        <div class="flex items-center gap-2.5">
+          <button
+            onclick="openSosModal()"
+            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-[#DC2626] hover:bg-red-700 text-white shadow-md shadow-red-600/25 transition active:scale-95"
+          >
+            <svg class="w-4 h-4 animate-pulse shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span>SOS 1122</span>
+          </button>
+
+          <button
+            id="mobile-menu-toggle"
+            onclick="toggleMobileNav()"
+            aria-label="Toggle Navigation Menu"
+            class="lg:hidden p-2.5 rounded-xl text-[#0F172A] hover:bg-slate-200/70 transition"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-nav-drawer" class="hidden lg:hidden pb-4 pt-2 border-t border-slate-200 space-y-1">
+        <a href="#crisis-data" onclick="closeMobileNav()" class="block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-[#EA580C]">Crisis Data</a>
+        <a href="#un-sdgs" onclick="closeMobileNav()" class="block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-[#EA580C]">UN SDGs</a>
+        <a href="#heat-calculator" onclick="closeMobileNav()" class="block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-[#EA580C]">Heat Calculator</a>
+        <a href="#first-aid" onclick="closeMobileNav()" class="block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-[#EA580C]">First Aid</a>
+        <a href="#project-roadmap" onclick="closeMobileNav()" class="block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-[#EA580C]">Project Roadmap</a>
+        <a href="#pledge-certificate" onclick="closeMobileNav()" class="block px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-orange-50 hover:text-[#EA580C]">Pledge &amp; Certificate</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. HERO SECTION & 4-COLUMN IMPACT METRICS BAR
+       ===================================================================== -->
+  <section class="hero-backdrop pt-12 pb-16 sm:pt-16 sm:pb-24 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <!-- Left 7 Columns: Official Pill, Headline, Subheadline & Dual CTAs -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex flex-wrap items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-emerald-200 shadow-sm">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#059669]"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#0F172A]">
+              University Community Engagement Project • UN SDG 13: Climate Action
+            </span>
+          </div>
+
+          <h1 class="font-display font-extrabold text-3xl sm:text-5xl lg:text-[54px] text-[#0F172A] leading-[1.12] tracking-tight">
+            Building <span class="text-[#EA580C]">Heatwave-Resilient</span> Communities Across Pakistan.
+          </h1>
+
+          <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+            With extreme temperatures surging past <strong>50°C across Punjab and Sindh</strong>, heatwaves have become Pakistan's deadliest silent climate hazard—disproportionately impacting daily-wage laborers, commuters, children, and the elderly. Through student-led civic literacy, hydration camps, and urban cooling drives, we translate <strong>UN SDG 13</strong> into measurable community protection.
+          </p>
+
+          <!-- Dual CTAs -->
+          <div class="flex flex-wrap items-center gap-4 pt-1">
+            <a href="#heat-calculator" class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl text-sm sm:text-base font-bold text-white bg-[#EA580C] hover:bg-orange-700 shadow-amber-glow transition transform hover:-translate-y-0.5">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+              </svg>
+              <span>Calculate Heat Risk</span>
+            </a>
+
+            <a href="#project-roadmap" class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl text-sm sm:text-base font-bold text-[#0F172A] bg-white hover:bg-emerald-50 border border-slate-300 hover:border-[#059669] shadow-civic transition transform hover:-translate-y-0.5">
+              <svg class="w-5 h-5 text-[#059669]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M9 11l3 3L22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
+              <span>View Project Roadmap</span>
+            </a>
+          </div>
+
+          <!-- Active Academic Context Banner -->
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-900/5 border border-slate-300/70 text-xs text-slate-700">
+            <svg class="w-4 h-4 text-[#059669] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+            <span id="hero-academic-badge" class="font-semibold">
+              Academic Civic Initiative • Target Locality: Urban &amp; Peri-Urban Communities, Pakistan
+            </span>
+          </div>
+        </div>
+
+        <!-- Right 5 Columns: Civic-Tech Thermal Vulnerability Visual Card -->
+        <div class="lg:col-span-5">
+          <div class="bg-[#0F172A] text-white rounded-3xl p-6 sm:p-8 shadow-civic-lg border border-slate-800 relative overflow-hidden">
+            <div class="flex items-center justify-between gap-2 pb-4 border-b border-slate-800">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-widest text-emerald-400">Climate Vulnerability Brief</span>
+                <h2 class="font-display font-bold text-lg sm:text-xl text-white mt-0.5">Pakistan Heatwave Risk Profile</h2>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-red-500/20 text-red-300 border border-red-500/40">
+                Top 10 Climate Risk
+              </span>
+            </div>
+
+            <!-- Custom Inline SVG Thermal Curve Visualization -->
+            <div class="my-6 bg-slate-900/90 rounded-2xl p-4 border border-slate-800">
+              <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+                <span>Daily Solar Exposure Curve</span>
+                <span class="text-orange-400 font-bold">Critical Window: 11 AM – 4 PM</span>
+              </div>
+              <svg class="w-full h-32" viewBox="0 0 360 110" fill="none" aria-label="Daily heatwave temperature curve peaking between 11 AM and 4 PM">
+                <defs>
+                  <linearGradient id="thermalAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#EA580C" stop-opacity="0.45" />
+                    <stop offset="100%" stop-color="#EA580C" stop-opacity="0.0" />
+                  </linearGradient>
+                  <linearGradient id="thermalLineGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#059669" />
+                    <stop offset="45%" stop-color="#EA580C" />
+                    <stop offset="65%" stop-color="#DC2626" />
+                    <stop offset="100%" stop-color="#F59E0B" />
+                  </linearGradient>
+                </defs>
+                <!-- Grid Lines -->
+                <line x1="20" y1="25" x2="340" y2="25" stroke="#1E293B" stroke-dasharray="4 4" />
+                <line x1="20" y1="55" x2="340" y2="55" stroke="#1E293B" stroke-dasharray="4 4" />
+                <line x1="20" y1="85" x2="340" y2="85" stroke="#1E293B" />
+                <!-- Danger Highlight Band -->
+                <rect x="145" y="12" width="95" height="73" rx="6" fill="rgba(220, 38, 38, 0.14)" stroke="rgba(220, 38, 38, 0.35)" stroke-dasharray="3 3" />
+                <!-- Area & Curve -->
+                <path d="M20 80 C75 76, 115 34, 185 18 C235 12, 275 45, 340 68 L340 85 L20 85 Z" fill="url(#thermalAreaGrad)" />
+                <path d="M20 80 C75 76, 115 34, 185 18 C235 12, 275 45, 340 68" stroke="url(#thermalLineGrad)" stroke-width="3.5" stroke-linecap="round" />
+                <!-- Peak Dot -->
+                <circle cx="192" cy="17" r="5" fill="#DC2626" stroke="#FFFFFF" stroke-width="2" />
+                <text x="192" y="10" text-anchor="middle" fill="#FCA5A5" font-size="9" font-weight="bold">50°C+ Peak</text>
+                <!-- X-Axis Labels -->
+                <text x="24" y="101" fill="#94A3B8" font-size="9">6 AM</text>
+                <text x="145" y="101" fill="#FCA5A5" font-size="9" font-weight="bold">11 AM</text>
+                <text x="225" y="101" fill="#FCA5A5" font-size="9" font-weight="bold">4 PM</text>
+                <text x="315" y="101" fill="#94A3B8" font-size="9">9 PM</text>
+              </svg>
+            </div>
+
+            <!-- Key Grassroots Priorities -->
+            <div class="space-y-2.5 text-xs sm:text-sm">
+              <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                <span class="text-slate-300">Primary At-Risk Groups</span>
+                <span class="font-bold text-amber-300">Outdoor Laborers, Elderly &amp; Kids</span>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                <span class="text-slate-300">Core Preventive Shield</span>
+                <span class="font-bold text-emerald-400">ORS Hydration + Shade + First Aid</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-Column Impact Metrics Bar -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-12">
+        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-civic">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">National Record</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#DC2626]"></span>
+          </div>
+          <p class="font-display font-extrabold text-3xl text-[#0F172A]">52.5°C</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Peak Recorded in Pakistan</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-civic">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Human Toll</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#EA580C]"></span>
+          </div>
+          <p class="font-display font-extrabold text-3xl text-[#EA580C]">1,200+</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Historic Heatwave Fatalities</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-civic">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Global Framework</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#059669]"></span>
+          </div>
+          <p class="font-display font-extrabold text-2xl sm:text-3xl text-[#059669]">UN SDGs 13, 3 &amp; 11</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Aligned Global Framework</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-civic">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Execution Model</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#0F172A]"></span>
+          </div>
+          <p class="font-display font-extrabold text-3xl text-[#0F172A]">4-Phase</p>
+          <p class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Grassroots Action Plan</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3. LIVE PAKISTAN CITY HEATWAVE ADVISORY MONITOR (INTERACTIVE)
+       ===================================================================== -->
+  <section id="crisis-data" class="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-[#EA580C] border border-orange-200 mb-3">
+            Regional Vulnerability Monitor
+          </span>
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+            Pakistan City Heatwave Advisory Monitor
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base mt-2 max-w-2xl">
+            Select a major Pakistani city below to inspect real-time thermal risk parameters, calculated Feels-Like Heat Index, NDMA alert status, and localized community guidance.
+          </p>
+        </div>
+
+        <!-- City Selector Tabs -->
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Select Pakistani City">
+          <button onclick="selectCity('lahore')" id="city-tab-lahore" class="city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#0F172A] text-white shadow-sm transition">
+            Lahore
+          </button>
+          <button onclick="selectCity('karachi')" id="city-tab-karachi" class="city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+            Karachi
+          </button>
+          <button onclick="selectCity('multan')" id="city-tab-multan" class="city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+            Multan
+          </button>
+          <button onclick="selectCity('jacobabad')" id="city-tab-jacobabad" class="city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+            Jacobabad
+          </button>
+          <button onclick="selectCity('islamabad')" id="city-tab-islamabad" class="city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+            Islamabad
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic City Advisory Card -->
+      <div class="rounded-3xl bg-[#FAFAF9] border border-slate-200/90 p-6 sm:p-8 shadow-civic">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Left 5 Cols: City Header & Telemetry Metrics -->
+          <div class="lg:col-span-5 space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p id="city-province-label" class="text-xs font-bold uppercase tracking-wider text-slate-500">Punjab • Urban Heat Island Zone</p>
+                <h3 id="city-title-display" class="font-display font-extrabold text-2xl sm:text-3xl text-[#0F172A] mt-0.5">Lahore</h3>
+              </div>
+              <span id="city-ndma-badge" class="px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-orange-100 text-[#EA580C] border border-orange-300">
+                Severe Warning
+              </span>
+            </div>
+
+            <!-- 3 Telemetry Readouts -->
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-white rounded-2xl p-4 border border-slate-200 text-center">
+                <p class="text-[11px] font-bold uppercase text-slate-400">Ambient Temp</p>
+                <p id="city-ambient-val" class="font-display font-extrabold text-2xl sm:text-3xl text-[#0F172A] mt-1">45°C</p>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-slate-200 text-center">
+                <p class="text-[11px] font-bold uppercase text-slate-400">Humidity</p>
+                <p id="city-humidity-val" class="font-display font-extrabold text-2xl sm:text-3xl text-sky-600 mt-1">36%</p>
+              </div>
+              <div class="bg-white rounded-2xl p-4 border border-orange-200 bg-orange-50/40 text-center">
+                <p class="text-[11px] font-bold uppercase text-[#EA580C]">Feels Like</p>
+                <p id="city-feelslike-val" class="font-display font-extrabold text-2xl sm:text-3xl text-[#EA580C] mt-1">49°C</p>
+              </div>
+            </div>
+
+            <!-- Thermal Severity Gauge -->
+            <div class="bg-white rounded-2xl p-4 border border-slate-200">
+              <div class="flex justify-between text-xs font-semibold text-slate-500 mb-2">
+                <span>Thermal Stress Index</span>
+                <span id="city-stress-label" class="text-[#EA580C] font-bold">High Thermal Load</span>
+              </div>
+              <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+                <div id="city-stress-bar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-orange-500 to-red-600 transition-all duration-500" style="width: 78%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right 7 Cols: Vulnerable Demographics & Localized Action Guidance -->
+          <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-xl bg-red-50 text-[#DC2626] flex items-center justify-center mb-4">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-bold text-base text-[#0F172A] mb-2">Primary Vulnerable Groups</h4>
+                <p id="city-vulnerable-text" class="text-sm text-slate-600 leading-relaxed">
+                  Construction workers, delivery riders, traffic wardens at major intersections, and elderly residents in dense concrete neighborhoods.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-[#DC2626]">
+                Priority Outreach Demographic
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-[#059669] flex items-center justify-center mb-4">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                </div>
+                <h4 class="font-display font-bold text-base text-[#0F172A] mb-2">Localized Action Guidance</h4>
+                <p id="city-guidance-text" class="text-sm text-slate-600 leading-relaxed">
+                  Avoid direct sun along major avenues between 11:00 AM and 4:00 PM. Drink 250ml water every 20 minutes, carry WHO ORS sachets, and wear damp head coverings.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-bold text-[#059669]">
+                NDMA / PDMA Civic Protocol
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. UN SUSTAINABLE DEVELOPMENT GOALS (SDG) ALIGNMENT SECTION
+       ===================================================================== -->
+  <section id="un-sdgs" class="py-16 sm:py-24 bg-[#FAFAF9] border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-[#059669] border border-emerald-200 mb-3">
+          United Nations 2030 Agenda Alignment
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+          Operationalizing UN Sustainable Development Goals
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
+          Although Pakistan contributes less than 1% of global greenhouse gas emissions, it stands on the frontline of climate-induced heatwaves. Our project directly advances three interconnected UN SDGs at the community level.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <!-- SDG 13 Card (Primary) -->
+        <div class="bg-white rounded-3xl p-7 border-2 border-[#059669]/40 shadow-civic relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-14 h-14 rounded-2xl bg-[#059669] text-white flex flex-col items-center justify-center shadow-md">
+                <span class="text-[10px] font-bold uppercase tracking-wider leading-none">SDG</span>
+                <span class="font-display font-extrabold text-2xl leading-tight">13</span>
+              </div>
+              <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-50 text-[#059669] border border-emerald-200">
+                Primary Focus Goal
+              </span>
+            </div>
+
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-1">Climate Action</h3>
+            <p class="text-xs font-bold text-[#059669] mb-4">UN Targets 13.1 &amp; 13.3</p>
+
+            <p class="text-sm text-slate-600 leading-relaxed mb-6">
+              Strengthening grassroots resilience and adaptive capacity to climate-related extreme heatwaves while expanding public education, early warning literacy, and youth-led climate stewardship.
+            </p>
+          </div>
+
+          <div class="space-y-2.5 pt-4 border-t border-slate-100 text-xs text-slate-700">
+            <div class="flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#059669] mt-1 shrink-0"></span>
+              <span><strong>Target 13.1:</strong> Strengthen resilience &amp; adaptive capacity to heatwave hazards.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#059669] mt-1 shrink-0"></span>
+              <span><strong>Target 13.3:</strong> Improve community education &amp; early-warning awareness.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SDG 3 Card -->
+        <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-civic flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-14 h-14 rounded-2xl bg-[#4C9F38] text-white flex flex-col items-center justify-center shadow-md">
+                <span class="text-[10px] font-bold uppercase tracking-wider leading-none">SDG</span>
+                <span class="font-display font-extrabold text-2xl leading-tight">3</span>
+              </div>
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600">
+                Public Health Co-Benefit
+              </span>
+            </div>
+
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-1">Good Health &amp; Well-Being</h3>
+            <p class="text-xs font-bold text-[#4C9F38] mb-4">UN Target 3.d • Health Risk Reduction</p>
+
+            <p class="text-sm text-slate-600 leading-relaxed mb-6">
+              Preventing fatal heatstroke, acute kidney injury, and severe dehydration among vulnerable outdoor workers and families through rapid cooling protocols and WHO ORS electrolyte relief.
+            </p>
+          </div>
+
+          <div class="space-y-2.5 pt-4 border-t border-slate-100 text-xs text-slate-700">
+            <div class="flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#4C9F38] mt-1 shrink-0"></span>
+              <span>Early triage between Heat Exhaustion and Heatstroke.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#4C9F38] mt-1 shrink-0"></span>
+              <span>Street-level hydration &amp; electrolyte distribution camps.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SDG 11 Card -->
+        <div class="bg-white rounded-3xl p-7 border border-slate-200 shadow-civic flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="w-14 h-14 rounded-2xl bg-[#EA580C] text-white flex flex-col items-center justify-center shadow-md">
+                <span class="text-[10px] font-bold uppercase tracking-wider leading-none">SDG</span>
+                <span class="font-display font-extrabold text-2xl leading-tight">11</span>
+              </div>
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-50 text-[#EA580C]">
+                Urban Resilience
+              </span>
+            </div>
+
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-1">Sustainable Cities &amp; Communities</h3>
+            <p class="text-xs font-bold text-[#EA580C] mb-4">UN Target 11.b • Urban Cooling</p>
+
+            <p class="text-sm text-slate-600 leading-relaxed mb-6">
+              Combating the Urban Heat Island effect in concrete-dense Pakistani neighborhoods through native shade-tree plantation (Neem, Amaltas, Sukhchain) and passive reflective cool-roof solutions.
+            </p>
+          </div>
+
+          <div class="space-y-2.5 pt-4 border-t border-slate-100 text-xs text-slate-700">
+            <div class="flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#EA580C] mt-1 shrink-0"></span>
+              <span>Native shade canopy restoration along pedestrian corridors.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#EA580C] mt-1 shrink-0"></span>
+              <span>Low-cost white lime cool-roof advocacy for low-income homes.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. INTERACTIVE HEAT INDEX & PERSONAL RISK CALCULATOR
+       ===================================================================== -->
+  <section id="heat-calculator" class="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-[#EA580C] border border-orange-200 mb-3">
+          Interactive Civic-Tech Assessment Tool
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+          Heat Index &amp; Personal Risk Calculator
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-3">
+          High relative humidity impairs sweat evaporation, causing a 41°C afternoon in coastal or monsoon-affected cities to feel above 52°C. Adjust temperature, humidity, and your exposure profile to compute real physiological heat risk.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Left 6 Cols: Controls -->
+        <div class="lg:col-span-6 bg-[#FAFAF9] rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-civic flex flex-col justify-between space-y-7">
+          <!-- Temperature Slider (28-54°C) -->
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <label for="calc-temp-slider" class="font-display font-bold text-sm sm:text-base text-[#0F172A]">
+                Ambient Air Temperature (°C)
+              </label>
+              <span id="calc-temp-readout" class="px-3.5 py-1 rounded-xl bg-orange-100 text-[#EA580C] font-display font-extrabold text-lg">
+                42°C
+              </span>
+            </div>
+            <input
+              id="calc-temp-slider"
+              type="range"
+              min="28"
+              max="54"
+              value="42"
+              oninput="updateHeatCalculator()"
+              class="civic-slider bg-gradient-to-r from-emerald-400 via-orange-500 to-red-600"
+            />
+            <div class="flex justify-between text-xs font-medium text-slate-400 mt-1.5">
+              <span>28°C (Mild)</span>
+              <span>41°C (Severe)</span>
+              <span>54°C (Extreme)</span>
+            </div>
+          </div>
+
+          <!-- Relative Humidity Slider (10-95%) -->
+          <div>
+            <div class="flex items-center justify-between mb-2.5">
+              <label for="calc-humidity-slider" class="font-display font-bold text-sm sm:text-base text-[#0F172A]">
+                Relative Humidity (%)
+              </label>
+              <span id="calc-humidity-readout" class="px-3.5 py-1 rounded-xl bg-sky-100 text-sky-800 font-display font-extrabold text-lg">
+                45%
+              </span>
+            </div>
+            <input
+              id="calc-humidity-slider"
+              type="range"
+              min="10"
+              max="95"
+              value="45"
+              oninput="updateHeatCalculator()"
+              class="civic-slider humidity-track bg-gradient-to-r from-teal-300 via-sky-500 to-indigo-600"
+            />
+            <div class="flex justify-between text-xs font-medium text-slate-400 mt-1.5">
+              <span>10% (Arid Multan)</span>
+              <span>50% (Moderate)</span>
+              <span>95% (Humid Karachi)</span>
+            </div>
+          </div>
+
+          <!-- Exposure Group Selector -->
+          <div>
+            <label for="calc-exposure-group" class="block font-display font-bold text-sm sm:text-base text-[#0F172A] mb-2.5">
+              Exposure Group &amp; Activity Profile
+            </label>
+            <select
+              id="calc-exposure-group"
+              onchange="updateHeatCalculator()"
+              class="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-semibold text-[#0F172A] focus:border-[#EA580C] focus:outline-none transition shadow-sm"
+            >
+              <option value="0">Indoor / Shaded (Low Physical Exertion)</option>
+              <option value="3" selected>Daily Commuter (Moderate Sun Exposure)</option>
+              <option value="6">Outdoor Worker / Student (Direct Sun &amp; Heavy Activity)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Right 6 Cols: Real-Time Rothfusz Output & Medical Guidance -->
+        <div class="lg:col-span-6 rounded-3xl p-6 sm:p-8 bg-[#0F172A] text-white shadow-civic-lg flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-800">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Rothfusz Effective Heat Index</p>
+                <div class="flex items-baseline gap-3 mt-1">
+                  <span id="calc-hi-c" class="font-display font-extrabold text-4xl sm:text-5xl text-[#EA580C]">50°C</span>
+                  <span id="calc-hi-f" class="text-sm font-semibold text-slate-400">(122°F)</span>
+                </div>
+              </div>
+
+              <span id="calc-risk-badge" class="px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/40">
+                Danger
+              </span>
+            </div>
+
+            <!-- Color-Coded Risk Meter Bar -->
+            <div class="my-5">
+              <div class="flex justify-between text-[11px] font-semibold text-slate-400 mb-1.5">
+                <span>Caution (&lt;38°C)</span>
+                <span>Extreme Caution (38–44°C)</span>
+                <span>Danger (45–51°C)</span>
+                <span>Extreme (52°C+)</span>
+              </div>
+              <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                <div id="calc-risk-meter-bar" class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-orange-500 to-red-600 transition-all duration-300" style="width: 76%;"></div>
+              </div>
+            </div>
+
+            <!-- Hydration & Rest Recommendations -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <p class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 mb-1">Recommended Hourly Intake</p>
+                <p id="calc-hydration-text" class="text-sm font-semibold text-white">750ml – 1,000ml water/hr + 1 WHO ORS packet</p>
+              </div>
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <p class="text-[11px] font-bold uppercase tracking-wider text-amber-300 mb-1">Shade &amp; Rest Protocol</p>
+                <p id="calc-rest-text" class="text-sm font-semibold text-white">15-minute shaded rest every 30 minutes outdoors</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tailored Medical Precaution Banner -->
+          <div id="calc-precaution-box" class="rounded-2xl bg-orange-950/60 border border-orange-500/40 p-4 sm:p-5">
+            <p id="calc-precaution-text" class="text-sm text-orange-100 leading-relaxed">
+              <strong>Medical Precaution:</strong> High risk of heat cramps and heat exhaustion. Cover your head and neck with a damp light-colored cotton cloth, avoid direct midday sun, and monitor for dizziness or heavy sweating.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. HEAT EXHAUSTION VS. HEATSTROKE INTERACTIVE FIRST-AID GUIDE
+       ===================================================================== -->
+  <section id="first-aid" class="py-16 sm:py-24 bg-[#FAFAF9] border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-100 text-[#DC2626] border border-red-200 mb-3">
+          Emergency Medical Literacy
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+          Heat Exhaustion vs. Heatstroke First-Aid Guide
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-3">
+          Distinguishing early heat exhaustion from life-threatening heatstroke prevents irreversible organ failure. Toggle between conditions below and review the 5-step rapid cooling protocol.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left 7 Cols: Interactive Condition Comparison Switcher -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-civic">
+          <!-- Switcher Buttons -->
+          <div class="grid grid-cols-2 gap-3 p-1.5 bg-slate-100 rounded-2xl mb-6" role="tablist">
+            <button
+              id="aid-tab-exhaustion"
+              onclick="selectFirstAidTab('exhaustion')"
+              class="py-3 px-4 rounded-xl font-display font-bold text-xs sm:text-sm transition bg-[#EA580C] text-white shadow-sm"
+            >
+              Heat Exhaustion (Early Warning)
+            </button>
+            <button
+              id="aid-tab-heatstroke"
+              onclick="selectFirstAidTab('heatstroke')"
+              class="py-3 px-4 rounded-xl font-display font-bold text-xs sm:text-sm transition text-slate-700 hover:text-[#0F172A]"
+            >
+              Heatstroke (1122 Medical Emergency)
+            </button>
+          </div>
+
+          <!-- Dynamic Clinical Panel -->
+          <div id="first-aid-panel" class="space-y-6">
+            <!-- Populated via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: 5-Step Rapid Cooling Protocol + WHO Homemade ORS Card -->
+        <div class="lg:col-span-5 space-y-6">
+          <!-- 5-Step Rapid Cooling Protocol -->
+          <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-civic">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-display font-extrabold text-lg text-[#0F172A]">5-Step Rapid Cooling Protocol</h3>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-50 text-[#059669]">Golden 15 Mins</span>
+            </div>
+
+            <ol class="space-y-3 text-xs sm:text-sm text-slate-700">
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#0F172A] text-white font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <span><strong>Relocate to Shade:</strong> Immediately move the victim out of direct sun into a ventilated, shaded, or air-conditioned room.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#0F172A] text-white font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <span><strong>Loosen Outer Layers:</strong> Remove excess or tight clothing and elevate legs slightly to improve blood flow.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#EA580C] text-white font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <span><strong>Target Major Pulse Points:</strong> Apply cold wet towels or ice packs to the <strong>neck, armpits, and groin</strong> where major blood vessels lie close to the skin.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#059669] text-white font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">4</span>
+                <span><strong>Evaporative Fanning:</strong> Spray or sponge cool water onto the skin while fanning vigorously to accelerate heat loss.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-[#DC2626] text-white font-display font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">5</span>
+                <span><strong>Hydrate Only If Alert / Call 1122:</strong> Give slow sips of ORS if fully conscious; if confused or unconscious, give <strong>nothing by mouth</strong> and call Rescue 1122 immediately.</span>
+              </li>
+            </ol>
+          </div>
+
+          <!-- WHO Homemade ORS Formula Card -->
+          <div class="rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-emerald-900 to-[#0F172A] text-white shadow-civic">
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                WHO Standard Formula
+              </span>
+              <span class="text-xs font-semibold text-slate-300">Emergency Rehydration</span>
+            </div>
+            <h3 class="font-display font-extrabold text-lg sm:text-xl text-white mb-2">
+              Homemade Oral Rehydration Salts (ORS)
+            </h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+              When commercial ORS sachets are unavailable during a heat emergency, prepare this exact WHO-approved electrolyte solution:
+            </p>
+
+            <div class="grid grid-cols-3 gap-2.5 text-center mb-4">
+              <div class="p-3 rounded-2xl bg-white/10 border border-white/10">
+                <p class="font-display font-extrabold text-xl text-sky-300">1 Liter</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Clean Boiled / Filtered Water</p>
+              </div>
+              <div class="p-3 rounded-2xl bg-white/10 border border-white/10">
+                <p class="font-display font-extrabold text-xl text-amber-300">6 Tsp</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Level Teaspoons Sugar</p>
+              </div>
+              <div class="p-3 rounded-2xl bg-white/10 border border-white/10">
+                <p class="font-display font-extrabold text-xl text-emerald-300">½ Tsp</p>
+                <p class="text-[11px] text-slate-200 mt-0.5">Level Teaspoon Table Salt</p>
+              </div>
+            </div>
+
+            <p class="text-[11px] text-emerald-200 bg-white/5 rounded-xl p-3 border border-white/10">
+              <strong>Clinical Note:</strong> Stir until completely dissolved. Solution should taste no saltier than tears. Discard unused mixture after 24 hours.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       7. COMMUNITY ENGAGEMENT PROJECT ROADMAP & PROPOSAL CUSTOMIZER
+       ===================================================================== -->
+  <section id="project-roadmap" class="py-16 sm:py-24 bg-white border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Header + Proposal Customizer Trigger -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+        <div class="max-w-2xl">
+          <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-[#059669] border border-emerald-200 mb-3">
+            Field Execution &amp; Evaluation Blueprint
+          </span>
+          <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+            Community Engagement Project Roadmap
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base mt-2">
+            Our four-phase field methodology combines civic awareness, street-level hydration relief, urban greening, and post-intervention impact evaluation.
+          </p>
+        </div>
+
+        <!-- Customize Proposal Info Button -->
+        <div class="flex flex-wrap items-center gap-3">
+          <button
+            onclick="openProposalModal()"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#0F172A] hover:bg-slate-800 text-white shadow-civic transition"
+          >
+            <svg class="w-4 h-4 text-[#EA580C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+            </svg>
+            <span>Customize Proposal Info</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Academic Proposal Metadata Banner (Dynamically Updated via Modal) -->
+      <div class="rounded-2xl bg-[#FAFAF9] border border-slate-200 p-4 sm:p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+        <div>
+          <p class="uppercase font-bold text-slate-400 tracking-wider">Institution &amp; Department</p>
+          <p id="meta-uni-dept" class="font-bold text-sm text-[#0F172A] mt-0.5">University Community Engagement Program</p>
+        </div>
+        <div>
+          <p class="uppercase font-bold text-slate-400 tracking-wider">Course &amp; Supervisor</p>
+          <p id="meta-course-sup" class="font-bold text-sm text-[#0F172A] mt-0.5">Community Engagement • Faculty Supervisor</p>
+        </div>
+        <div>
+          <p class="uppercase font-bold text-slate-400 tracking-wider">Project Team Members</p>
+          <p id="meta-team-members" class="font-bold text-sm text-[#0F172A] mt-0.5">Student Civic Action Group (UN SDG 13)</p>
+        </div>
+        <div>
+          <p class="uppercase font-bold text-slate-400 tracking-wider">Target Field Locality</p>
+          <p id="meta-target-locality" class="font-bold text-sm text-[#059669] mt-0.5">Urban &amp; Peri-Urban Communities, Pakistan</p>
+        </div>
+      </div>
+
+      <!-- Phase Filter Buttons -->
+      <div class="flex flex-wrap items-center gap-2.5 mb-8" role="tablist" aria-label="Filter Project Phases">
+        <button onclick="filterRoadmap('all')" id="roadmap-btn-all" class="roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#EA580C] text-white shadow-sm transition">
+          All Phases
+        </button>
+        <button onclick="filterRoadmap('phase1')" id="roadmap-btn-phase1" class="roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+          Phase 1: Awareness &amp; Literacy
+        </button>
+        <button onclick="filterRoadmap('phase2')" id="roadmap-btn-phase2" class="roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+          Phase 2: Hydration &amp; Cooling Camps
+        </button>
+        <button onclick="filterRoadmap('phase3')" id="roadmap-btn-phase3" class="roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+          Phase 3: Urban Greening &amp; Cool Roofs
+        </button>
+        <button onclick="filterRoadmap('phase4')" id="roadmap-btn-phase4" class="roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition">
+          Phase 4: Community Impact Audit
+        </button>
+      </div>
+
+      <!-- 4 Project Phase Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <!-- Phase 1 -->
+        <article data-phase="phase1" class="roadmap-card bg-[#FAFAF9] rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-civic flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-orange-100 text-[#EA580C]">PHASE 01 • WEEKS 1–2</span>
+              <span class="text-xs font-bold text-slate-500">SDG Target 13.3</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-2">
+              Phase 1: Awareness &amp; Literacy
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed mb-5">
+              Conducting interactive heat-health workshops in local schools, mosques, and marketplaces alongside distributing illustrated bilingual first-aid pamphlets and Rescue 1122 pocket cards.
+            </p>
+            <div class="space-y-2 text-xs text-slate-700 bg-white p-4 rounded-2xl border border-slate-200">
+              <p><strong>Deliverables:</strong> 600+ illustrated safety flyers, 4 school &amp; community workshops, digital Heat Index tool deployment.</p>
+              <p><strong>Target Demographics:</strong> School students, families, shopkeepers, and local mosque committees.</p>
+            </div>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between text-xs">
+            <span class="font-bold text-[#059669]">KPI: 600+ Citizens Educated</span>
+            <span class="font-semibold text-slate-500">Pre/Post Literacy Quiz</span>
+          </div>
+        </article>
+
+        <!-- Phase 2 -->
+        <article data-phase="phase2" class="roadmap-card bg-[#FAFAF9] rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-civic flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-sky-100 text-sky-800">PHASE 02 • WEEKS 3–4</span>
+              <span class="text-xs font-bold text-slate-500">SDG Target 3.d</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-2">
+              Phase 2: Hydration &amp; Cooling Camps
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed mb-5">
+              Establishing shaded street-side hydration stations at busy transit stops, labor chowks, and traffic junctions—providing chilled clean water, WHO ORS sachets, and wet cooling towels.
+            </p>
+            <div class="space-y-2 text-xs text-slate-700 bg-white p-4 rounded-2xl border border-slate-200">
+              <p><strong>Deliverables:</strong> 3 pop-up shaded hydration stalls, 850+ ORS &amp; chilled water packs, shaded clay water bowls for birds.</p>
+              <p><strong>Target Demographics:</strong> Daily-wage construction laborers, traffic wardens, delivery riders, and commuters.</p>
+            </div>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between text-xs">
+            <span class="font-bold text-[#059669]">KPI: 850+ Hydration Kits Served</span>
+            <span class="font-semibold text-slate-500">Zero Heatstroke Incidents</span>
+          </div>
+        </article>
+
+        <!-- Phase 3 -->
+        <article data-phase="phase3" class="roadmap-card bg-[#FAFAF9] rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-civic flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-[#059669]">PHASE 03 • WEEKS 5–6</span>
+              <span class="text-xs font-bold text-slate-500">SDG Target 11.b</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-2">
+              Phase 3: Urban Greening &amp; Cool Roofs
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed mb-5">
+              Mitigating neighborhood Urban Heat Islands by planting drought-resilient native shade trees (Neem, Amaltas, Sukhchain) and demonstrating low-cost white lime reflective roof coatings.
+            </p>
+            <div class="space-y-2 text-xs text-slate-700 bg-white p-4 rounded-2xl border border-slate-200">
+              <p><strong>Deliverables:</strong> 100+ native shade saplings with protective guards, 5 model cool-roof whitewash demonstrations.</p>
+              <p><strong>Target Demographics:</strong> Low-income concrete households, public school courtyards, and neighborhood streets.</p>
+            </div>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between text-xs">
+            <span class="font-bold text-[#059669]">KPI: 100+ Saplings &amp; 4–6°C Indoor Drop</span>
+            <span class="font-semibold text-slate-500">Adopted by Local Youth</span>
+          </div>
+        </article>
+
+        <!-- Phase 4 -->
+        <article data-phase="phase4" class="roadmap-card bg-[#FAFAF9] rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-civic flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-slate-200 text-[#0F172A]">PHASE 04 • WEEKS 7–8</span>
+              <span class="text-xs font-bold text-slate-500">SDG Target 13.1</span>
+            </div>
+            <h3 class="font-display font-extrabold text-xl text-[#0F172A] mb-2">
+              Phase 4: Community Impact Audit
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed mb-5">
+              Evaluating behavioral change, first-aid retention, sapling survival rates, and citizen pledge adoption through structured post-campaign surveys compiled into an academic evaluation report.
+            </p>
+            <div class="space-y-2 text-xs text-slate-700 bg-white p-4 rounded-2xl border border-slate-200">
+              <p><strong>Deliverables:</strong> Baseline vs. Endline Impact Report, photographic field dossier, community handover charter.</p>
+              <p><strong>Target Demographics:</strong> Surveyed households, school coordinators, and university evaluation faculty.</p>
+            </div>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between text-xs">
+            <span class="font-bold text-[#059669]">KPI: &gt;80% First-Aid Recall Rate</span>
+            <span class="font-semibold text-slate-500">Final Academic Defense</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       8. INTERACTIVE COMMUNITY PLEDGE & DOWNLOADABLE PNG CERTIFICATE GENERATOR
+       ===================================================================== -->
+  <section id="pledge-certificate" class="py-16 sm:py-24 bg-[#FAFAF9] border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-[#059669] border border-emerald-200 mb-3">
+          Civic Commitment &amp; Recognition
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+          Community Climate Action Pledge &amp; Certificate
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-3">
+          Join students and citizens across Pakistan in pledging concrete heatwave protection actions, and instantly download your personalized <strong>UN SDG 13 Certificate of Community Climate Action</strong>.
+        </p>
+
+        <div class="inline-flex items-center gap-2.5 mt-5 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#059669] animate-pulse"></span>
+          <span class="text-sm font-bold text-[#0F172A]">
+            <span id="pledge-total-counter" class="font-display font-extrabold text-[#EA580C]">1,486</span> Climate Champions Pledged Nationwide
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Left 5 Cols: Pledge Form -->
+        <div class="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-civic">
+          <form onsubmit="submitCommunityPledge(event)" class="space-y-5">
+            <div>
+              <label for="pledge-fullname" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Recipient Full Name *
+              </label>
+              <input
+                id="pledge-fullname"
+                type="text"
+                required
+                placeholder="e.g., Ayesha Tariq / Muhammad Usman"
+                class="w-full rounded-2xl border border-slate-300 bg-[#FAFAF9] px-4 py-3 text-sm font-semibold text-[#0F172A] focus:border-[#EA580C] focus:bg-white focus:outline-none transition"
+              />
+            </div>
+
+            <div>
+              <label for="pledge-city-select" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                City / Region *
+              </label>
+              <select
+                id="pledge-city-select"
+                class="w-full rounded-2xl border border-slate-300 bg-[#FAFAF9] px-4 py-3 text-sm font-semibold text-[#0F172A] focus:border-[#EA580C] focus:bg-white focus:outline-none transition"
+              >
+                <option value="Lahore, Punjab">Lahore, Punjab</option>
+                <option value="Karachi, Sindh">Karachi, Sindh</option>
+                <option value="Multan, South Punjab">Multan, South Punjab</option>
+                <option value="Islamabad / Rawalpindi">Islamabad / Rawalpindi</option>
+                <option value="Faisalabad, Punjab">Faisalabad, Punjab</option>
+                <option value="Peshawar, Khyber Pakhtunkhwa">Peshawar, Khyber Pakhtunkhwa</option>
+                <option value="Quetta, Balochistan">Quetta, Balochistan</option>
+                <option value="Jacobabad, Sindh">Jacobabad, Sindh</option>
+                <option value="Pakistan">Other City, Pakistan</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="pledge-action-select" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                Select Your Heatwave Action Pledge *
+              </label>
+              <select
+                id="pledge-action-select"
+                class="w-full rounded-2xl border border-slate-300 bg-[#FAFAF9] px-4 py-3 text-sm font-semibold text-[#0F172A] focus:border-[#EA580C] focus:bg-white focus:outline-none transition"
+              >
+                <option value="Provide chilled water & ORS packets to outdoor laborers and riders">Provide chilled water &amp; ORS packets to outdoor laborers</option>
+                <option value="Maintain shaded clay water bowls for birds and street animals">Maintain shaded water bowls for birds &amp; animals</option>
+                <option value="Plant and nurture native shade trees in my neighborhood">Plant &amp; nurture native shade trees in my neighborhood</option>
+                <option value="Share heatstroke first-aid protocols and check on elderly neighbors">Share heatstroke first-aid guides &amp; check on elderly neighbors</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3.5 px-6 rounded-2xl font-display font-bold text-sm sm:text-base text-white bg-[#059669] hover:bg-emerald-700 shadow-green-glow transition transform hover:-translate-y-0.5"
+            >
+              Generate Official SDG 13 Certificate
+            </button>
+          </form>
+        </div>
+
+        <!-- Right 7 Cols: Live Certificate Preview & High-Res PNG Download -->
+        <div class="lg:col-span-7 space-y-4">
+          <div id="certificate-preview-box" class="certificate-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+            <!-- Header Row -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-orange-200/80">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-[#0F172A] flex items-center justify-center">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" />
+                    <circle cx="12" cy="11" r="3" stroke="#EA580C" fill="#EA580C" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-display font-extrabold text-sm sm:text-base text-[#0F172A]">HeatShield Pakistan</p>
+                  <p id="cert-uni-subtitle" class="text-[11px] font-semibold text-slate-500">University Community Engagement Program</p>
+                </div>
+              </div>
+
+              <span class="px-3.5 py-1 rounded-full text-xs font-extrabold bg-[#059669] text-white tracking-wide">
+                UN SDG 13 • CLIMATE ACTION
+              </span>
+            </div>
+
+            <!-- Certificate Main Text -->
+            <div class="text-center py-6 sm:py-8 space-y-3">
+              <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-[#EA580C]">
+                Certificate of Community Climate Action
+              </p>
+              <h3 class="font-display font-extrabold text-2xl sm:text-3xl text-[#0F172A]">
+                UN SDG 13 Resilience Champion
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-500">This certificate is proudly presented to</p>
+
+              <div class="py-1.5">
+                <p id="cert-display-name" class="font-display font-extrabold text-2xl sm:text-4xl text-[#059669] border-b-2 border-dashed border-[#EA580C] inline-block px-6 pb-1">
+                  Your Name Here
+                </p>
+              </div>
+
+              <p class="text-xs sm:text-sm text-slate-700 max-w-xl mx-auto leading-relaxed">
+                From <strong id="cert-display-city" class="text-[#0F172A]">Lahore, Punjab</strong>, for pledging to:
+                <span id="cert-display-pledge" class="block font-semibold text-[#0F172A] mt-1 italic">
+                  "Provide chilled water &amp; ORS packets to outdoor laborers and riders"
+                </span>
+                in support of <strong>UN Sustainable Development Goal 13 (Climate Action)</strong>.
+              </p>
+            </div>
+
+            <!-- Footer Row with Verification Seal -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-orange-200/80 text-xs text-slate-600">
+              <div>
+                <p id="cert-display-date" class="font-bold text-[#0F172A]">Issued: November 24, 2026</p>
+                <p id="cert-display-id" class="font-mono text-[11px] text-slate-500">Verification ID: HSP-SDG13-8421</p>
+              </div>
+
+              <!-- Custom Inline SVG Official Seal -->
+              <div class="flex items-center gap-2.5">
+                <svg class="w-11 h-11 text-[#059669]" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <circle cx="24" cy="24" r="20" stroke="#059669" stroke-width="2" stroke-dasharray="3 2" />
+                  <circle cx="24" cy="24" r="15" fill="#ECFDF5" stroke="#059669" stroke-width="1.5" />
+                  <path d="M18 24l4 4 8-8" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="text-right">
+                  <p class="font-display font-bold text-[#0F172A]">HeatShield Pakistan Team</p>
+                  <p class="text-[11px] text-slate-500">Verified Civic Action Pledge</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-end gap-3">
+            <button
+              onclick="downloadPngCertificate()"
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#0F172A] hover:bg-slate-800 text-white shadow-civic transition"
+            >
+              <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Download High-Res PNG Certificate</span>
+            </button>
+            <button
+              onclick="window.print()"
+              class="inline-flex items-center gap-2 px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-white hover:bg-slate-100 text-[#0F172A] border border-slate-300 transition"
+            >
+              <span>Print Certificate</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       9. HEATWAVE MYTHS VS. FACTS FAQ ACCORDION
+       ===================================================================== -->
+  <section class="py-16 sm:py-24 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-100 text-[#0F172A] border border-slate-200 mb-3">
+          Evidence-Based Public Awareness
+        </span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-[#0F172A] tracking-tight">
+          Heatwave Myths vs. Medical Facts
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-3">
+          Debunking widespread misconceptions in Pakistan that can worsen dehydration or delay life-saving heatstroke care.
+        </p>
+      </div>
+
+      <div class="space-y-4" id="faq-accordion">
+        <!-- FAQ 1 -->
+        <div class="rounded-2xl border border-slate-200 bg-[#FAFAF9] overflow-hidden">
+          <button onclick="toggleFaq(1)" class="w-full flex items-center justify-between gap-4 p-5 text-left font-display font-bold text-sm sm:text-base text-[#0F172A] hover:bg-slate-100/70 transition">
+            <span>Myth 1: "Drinking ice-cold water immediately after coming in from 48°C sun is the best way to cool down."</span>
+            <span id="faq-icon-1" class="text-[#EA580C] font-extrabold text-xl shrink-0">+</span>
+          </button>
+          <div id="faq-body-1" class="hidden px-5 pb-5 pt-1 text-sm text-slate-600 border-t border-slate-200/70 leading-relaxed">
+            <strong class="text-[#059669]">Medical Fact:</strong> Gulping freezing ice water immediately after intense heat exposure can trigger stomach cramps and constrict blood vessels, slowing heat dissipation. Instead, sit in the shade for 5 minutes and drink <strong>cool or room-temperature water mixed with WHO ORS</strong> in steady sips.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="rounded-2xl border border-slate-200 bg-[#FAFAF9] overflow-hidden">
+          <button onclick="toggleFaq(2)" class="w-full flex items-center justify-between gap-4 p-5 text-left font-display font-bold text-sm sm:text-base text-[#0F172A] hover:bg-slate-100/70 transition">
+            <span>Myth 2: "The sun is only dangerous right at 12:00 PM noon."</span>
+            <span id="faq-icon-2" class="text-[#EA580C] font-extrabold text-xl shrink-0">+</span>
+          </button>
+          <div id="faq-body-2" class="hidden px-5 pb-5 pt-1 text-sm text-slate-600 border-t border-slate-200/70 leading-relaxed">
+            <strong class="text-[#059669]">Medical Fact:</strong> Peak ambient temperatures and ground thermal radiation in Pakistan actually occur between <strong>11:00 AM and 4:00 PM</strong>, as concrete roads and buildings continue radiating trapped heat well into the late afternoon.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="rounded-2xl border border-slate-200 bg-[#FAFAF9] overflow-hidden">
+          <button onclick="toggleFaq(3)" class="w-full flex items-center justify-between gap-4 p-5 text-left font-display font-bold text-sm sm:text-base text-[#0F172A] hover:bg-slate-100/70 transition">
+            <span>Myth 3: "Heatstroke only happens to people working outdoors in direct sunlight."</span>
+            <span id="faq-icon-3" class="text-[#EA580C] font-extrabold text-xl shrink-0">+</span>
+          </button>
+          <div id="faq-body-3" class="hidden px-5 pb-5 pt-1 text-sm text-slate-600 border-t border-slate-200/70 leading-relaxed">
+            <strong class="text-[#059669]">Medical Fact:</strong> Classic non-exertional heatstroke frequently affects <strong>elderly citizens, infants, and people with chronic illnesses</strong> inside poorly ventilated, uninsulated concrete rooms during prolonged power outages or high-humidity nights.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="rounded-2xl border border-slate-200 bg-[#FAFAF9] overflow-hidden">
+          <button onclick="toggleFaq(4)" class="w-full flex items-center justify-between gap-4 p-5 text-left font-display font-bold text-sm sm:text-base text-[#0F172A] hover:bg-slate-100/70 transition">
+            <span>Myth 4: "If someone faints from heatstroke, you should immediately pour water into their mouth."</span>
+            <span id="faq-icon-4" class="text-[#EA580C] font-extrabold text-xl shrink-0">+</span>
+          </button>
+          <div id="faq-body-4" class="hidden px-5 pb-5 pt-1 text-sm text-slate-600 border-t border-slate-200/70 leading-relaxed">
+            <strong class="text-[#DC2626]">Critical Safety Fact:</strong> <strong>Never</strong> give water or fluids by mouth to a person who is unconscious, drowsy, or vomiting—it can enter their airway and cause fatal choking. Focus on external rapid cooling (wet towels/ice packs on neck, armpits, groin) and call <strong>Rescue 1122</strong> immediately.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       ACADEMIC PROJECT FOOTER (DEEP SLATE NAVY #0F172A)
+       ===================================================================== -->
+  <footer class="bg-[#0F172A] text-slate-300 pt-14 pb-10 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b border-slate-800">
+        <!-- Academic Project Details -->
+        <div class="md:col-span-5 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" />
+                <circle cx="12" cy="11" r="3" stroke="#EA580C" fill="#EA580C" />
+              </svg>
+            </div>
+            <span class="font-display font-extrabold text-xl text-white">HeatShield Pakistan</span>
+          </div>
+
+          <p class="text-sm text-slate-400 leading-relaxed">
+            A university Community Engagement Initiative aligned with <strong>UN Sustainable Development Goal 13 (Climate Action)</strong>—building grassroots heatwave awareness, rapid cooling literacy, and community resilience across Pakistan.
+          </p>
+
+          <div class="rounded-2xl bg-slate-900 border border-slate-800 p-4 text-xs space-y-1.5">
+            <p class="text-emerald-400 font-bold uppercase tracking-wider">Academic Project Attribution</p>
+            <p id="footer-uni-dept" class="text-white font-semibold">University Community Engagement Program</p>
+            <p id="footer-course-sup" class="text-slate-400">Community Engagement • Faculty Supervisor</p>
+            <p id="footer-team-members" class="text-slate-400">Team: Student Civic Action Group (UN SDG 13)</p>
+          </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="font-display font-bold text-sm uppercase tracking-wider text-white">Quick Navigation</h4>
+          <ul class="space-y-2.5 text-sm text-slate-400">
+            <li><a href="#crisis-data" class="hover:text-[#EA580C] transition">City Heatwave Monitor</a></li>
+            <li><a href="#un-sdgs" class="hover:text-[#EA580C] transition">UN SDG 13, 3 &amp; 11 Alignment</a></li>
+            <li><a href="#heat-calculator" class="hover:text-[#EA580C] transition">Heat Index Risk Calculator</a></li>
+            <li><a href="#first-aid" class="hover:text-[#EA580C] transition">First Aid &amp; WHO ORS Formula</a></li>
+            <li><a href="#project-roadmap" class="hover:text-[#EA580C] transition">4-Phase Project Roadmap</a></li>
+            <li><a href="#pledge-certificate" class="hover:text-[#EA580C] transition">SDG 13 Certificate Generator</a></li>
+          </ul>
+        </div>
+
+        <!-- National Emergency Directory -->
+        <div class="md:col-span-4 space-y-3">
+          <h4 class="font-display font-bold text-sm uppercase tracking-wider text-white">Pakistan Emergency Directory</h4>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
+              <p class="text-slate-400">Rescue Emergency</p>
+              <p class="font-display font-extrabold text-xl text-[#DC2626] mt-0.5">1122</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
+              <p class="text-slate-400">NDMA Helpline</p>
+              <p class="font-display font-extrabold text-xl text-[#EA580C] mt-0.5">1700</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
+              <p class="text-slate-400">Edhi Ambulance</p>
+              <p class="font-display font-extrabold text-xl text-[#059669] mt-0.5">115</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-900 border border-slate-800">
+              <p class="text-slate-400">Chhipa Welfare</p>
+              <p class="font-display font-extrabold text-xl text-amber-400 mt-0.5">1020</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <p>© 2026 HeatShield Pakistan • Community Engagement Initiative for UN SDG 13 (Climate Action).</p>
+        <p class="text-slate-400 font-medium">Built for Grassroots Climate Resilience &amp; Academic Evaluation</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       MODAL 1: PAKISTAN HEATWAVE EMERGENCY HELPLINES (SOS 1122)
+       ===================================================================== -->
+  <div id="sos-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="sos-modal-heading">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-3 pb-4 border-b border-slate-200">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-red-100 text-[#DC2626] flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+          </div>
+          <div>
+            <h3 id="sos-modal-heading" class="font-display font-extrabold text-xl text-[#0F172A]">
+              Pakistan Heatwave Emergency Helplines
+            </h3>
+            <p class="text-xs text-slate-500">24/7 Toll-Free Rapid Ambulance &amp; Disaster Response</p>
+          </div>
+        </div>
+        <button onclick="closeSosModal()" aria-label="Close Emergency Modal" class="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Helpline Directory List -->
+      <div class="space-y-3 my-5">
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-red-50 border border-red-200">
+          <div>
+            <p class="font-display font-bold text-sm text-[#0F172A]">Rescue 1122 (Punjab, KP, Sindh, GB, AJK)</p>
+            <p class="text-xs text-[#DC2626] font-semibold">Primary Heatstroke Ambulance &amp; First-Responder Service</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="tel:1122" class="px-3.5 py-2 rounded-xl bg-[#DC2626] text-white font-display font-extrabold text-xs sm:text-sm hover:bg-red-700 transition">Call 1122</a>
+            <button onclick="copyNumber('1122', 'Rescue 1122')" class="px-2.5 py-2 rounded-xl bg-white border border-red-200 text-xs font-bold text-slate-700 hover:bg-red-100">Copy</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200">
+          <div>
+            <p class="font-display font-bold text-sm text-[#0F172A]">Edhi Foundation Ambulance</p>
+            <p class="text-xs text-slate-500">Nationwide 24/7 Emergency Medical Transport</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="tel:115" class="px-3.5 py-2 rounded-xl bg-[#059669] text-white font-display font-extrabold text-xs sm:text-sm hover:bg-emerald-700 transition">Call 115</a>
+            <button onclick="copyNumber('115', 'Edhi Ambulance')" class="px-2.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100">Copy</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200">
+          <div>
+            <p class="font-display font-bold text-sm text-[#0F172A]">Chhipa Welfare Ambulance (Karachi / Sindh)</p>
+            <p class="text-xs text-slate-500">Heatstroke Stabilization &amp; Rapid Rescue</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="tel:1020" class="px-3.5 py-2 rounded-xl bg-[#EA580C] text-white font-display font-extrabold text-xs sm:text-sm hover:bg-orange-700 transition">Call 1020</a>
+            <button onclick="copyNumber('1020', 'Chhipa Welfare')" class="px-2.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100">Copy</button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#FAFAF9] border border-slate-200">
+          <div>
+            <p class="font-display font-bold text-sm text-[#0F172A]">NDMA / PDMA Disaster Control Helplines</p>
+            <p class="text-xs text-slate-500">National (1700) &amp; Provincial Heatwave Relief Centers (1129)</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="tel:1700" class="px-3.5 py-2 rounded-xl bg-[#0F172A] text-white font-display font-extrabold text-xs sm:text-sm hover:bg-slate-800 transition">Call 1700</a>
+            <button onclick="copyNumber('1700 / 1129', 'NDMA / PDMA')" class="px-2.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Immediate Emergency Checklist -->
+      <div class="rounded-2xl bg-amber-50 border border-amber-200 p-4 text-xs text-amber-950 space-y-1.5">
+        <p class="font-display font-extrabold text-sm text-amber-950">Immediate Emergency Checklist (While Waiting for Ambulance):</p>
+        <ul class="list-disc pl-4 space-y-1">
+          <li>Move the person immediately to deep shade or an air-conditioned space.</li>
+          <li>Apply cold wet cloths or ice packs to the <strong>neck, armpits, and groin</strong>.</li>
+          <li>Fan continuously while misting skin with cool water.</li>
+          <li>Do <strong>NOT</strong> force fluids if the person is confused, vomiting, or unconscious.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: CUSTOMIZE UNIVERSITY PROPOSAL INFO
+       ===================================================================== -->
+  <div id="proposal-customizer-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="proposal-modal-heading">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-7 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 mb-4">
+        <div>
+          <h3 id="proposal-modal-heading" class="font-display font-extrabold text-lg sm:text-xl text-[#0F172A]">
+            Customize Academic Proposal Info
+          </h3>
+          <p class="text-xs text-slate-500">Personalize credits across the website &amp; certificate (saved locally)</p>
+        </div>
+        <button onclick="closeProposalModal()" aria-label="Close Proposal Modal" class="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100">
+          ✕
+        </button>
+      </div>
+
+      <form onsubmit="saveProposalConfig(event)" class="space-y-4">
+        <div>
+          <label for="cfg-university" class="block text-xs font-bold text-slate-700 mb-1">University Name</label>
+          <input id="cfg-university" type="text" placeholder="e.g., COMSATS University Islamabad / University of the Punjab" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#EA580C] focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="cfg-department" class="block text-xs font-bold text-slate-700 mb-1">Department</label>
+          <input id="cfg-department" type="text" placeholder="e.g., Department of Computer Science / Environmental Sciences" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#EA580C] focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="cfg-course" class="block text-xs font-bold text-slate-700 mb-1">Course &amp; Supervisor Name</label>
+          <input id="cfg-course" type="text" placeholder="e.g., Community Engagement (CIV-201) • Supervised by Dr. Sarah Ahmed" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#EA580C] focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="cfg-team" class="block text-xs font-bold text-slate-700 mb-1">Team Members</label>
+          <input id="cfg-team" type="text" placeholder="e.g., Ali Raza, Fatima Noor, Hamza Tariq, Zainab Khan" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#EA580C] focus:outline-none" />
+        </div>
+
+        <div>
+          <label for="cfg-locality" class="block text-xs font-bold text-slate-700 mb-1">Target Locality</label>
+          <input id="cfg-locality" type="text" placeholder="e.g., Johar Town &amp; Township Communities, Lahore" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm focus:border-[#EA580C] focus:outline-none" />
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100">
+          <button type="button" onclick="resetProposalConfig()" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100">
+            Reset Default
+          </button>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeProposalModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">
+              Cancel
+            </button>
+            <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-[#EA580C] hover:bg-orange-700 text-white shadow-sm">
+              Save &amp; Apply Changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       NON-INTRUSIVE TOAST NOTIFICATION
+       ===================================================================== -->
+  <div id="civic-toast" class="fixed bottom-5 right-5 z-50 hidden items-center gap-3 px-4 py-3 rounded-2xl bg-[#0F172A] text-white text-xs sm:text-sm font-semibold shadow-2xl border border-slate-700">
+    <span class="w-2.5 h-2.5 rounded-full bg-[#059669] shrink-0"></span>
+    <span id="civic-toast-text">Notification</span>
+  </div>
+
+  <!-- =====================================================================
+       JAVASCRIPT: INTERACTIVITY, CALCULATOR, CANVAS CERTIFICATE & STORAGE
+       ===================================================================== -->
+  <script>
+    // ---------------------------------------------------------------------
+    // 1. LIVE PAKISTAN CITY HEATWAVE ADVISORY MONITOR DATA
+    // ---------------------------------------------------------------------
+    const PAKISTAN_CITIES = {
+      lahore: {
+        title: "Lahore",
+        province: "Punjab • Urban Heat Island Zone",
+        ambient: "45°C",
+        humidity: "36%",
+        feelsLike: "49°C",
+        alertLevel: "Severe Warning",
+        alertBadgeClass: "bg-orange-100 text-[#EA580C] border-orange-300",
+        stressLabel: "High Thermal Load (78%)",
+        stressWidth: "78%",
+        vulnerable: "Construction workers, delivery riders, traffic wardens at major intersections, and elderly residents in dense concrete neighborhoods.",
+        guidance: "Avoid direct sun along major avenues between 11:00 AM and 4:00 PM. Drink 250ml water every 20 minutes, carry WHO ORS sachets, and wear damp head coverings."
+      },
+      karachi: {
+        title: "Karachi",
+        province: "Sindh • Coastal High-Humidity Zone",
+        ambient: "41°C",
+        humidity: "74%",
+        feelsLike: "53°C",
+        alertLevel: "Extreme Danger",
+        alertBadgeClass: "bg-red-100 text-[#DC2626] border-red-300",
+        stressLabel: "Critical Wet-Bulb Humidity Stress (92%)",
+        stressWidth: "92%",
+        vulnerable: "Port and industrial laborers, street vendors, bus commuters, and residents in multi-story apartments during power interruptions.",
+        guidance: "High coastal humidity halts sweat evaporation. Prioritize shaded cross-ventilation, continuous ORS intake, and rapid cold-water sponging at first sign of dizziness."
+      },
+      multan: {
+        title: "Multan",
+        province: "South Punjab • Arid Loo Wind Belt",
+        ambient: "48°C",
+        humidity: "22%",
+        feelsLike: "49°C",
+        alertLevel: "Extreme Danger",
+        alertBadgeClass: "bg-red-100 text-[#DC2626] border-red-300",
+        stressLabel: "Scorching Dry Heatwave (89%)",
+        stressWidth: "89%",
+        vulnerable: "Agricultural harvesters, brick-kiln workers, rickshaw drivers, and school-going children commuting at midday.",
+        guidance: "Hot 'Loo' winds accelerate silent dehydration. Cover head, ears, and neck with a wet cotton cloth, halt strenuous outdoor labor at midday, and hydrate every 15 minutes."
+      },
+      jacobabad: {
+        title: "Jacobabad",
+        province: "Upper Sindh • Thermal Epicenter",
+        ambient: "51°C",
+        humidity: "26%",
+        feelsLike: "54°C",
+        alertLevel: "Extreme Danger",
+        alertBadgeClass: "bg-[#DC2626] text-white border-red-700",
+        stressLabel: "Life-Threatening Thermal Emergency (98%)",
+        stressWidth: "98%",
+        vulnerable: "All outdoor workers, infants, pregnant women, elderly citizens, and livestock/stray animals exposed to ambient heat.",
+        guidance: "Critical physiological threshold. Remain indoors during peak solar hours, use wet cooling towels across pulse points, and check frequently on elderly neighbors."
+      },
+      islamabad: {
+        title: "Islamabad",
+        province: "Federal Capital • Potohar Foothills",
+        ambient: "40°C",
+        humidity: "34%",
+        feelsLike: "42°C",
+        alertLevel: "High Caution",
+        alertBadgeClass: "bg-amber-100 text-amber-800 border-amber-300",
+        stressLabel: "Elevated Solar UV Load (62%)",
+        stressWidth: "62%",
+        vulnerable: "University students walking across open campuses, highway maintenance staff, and outdoor sanitation workers.",
+        guidance: "Schedule outdoor field drives and athletic activities before 10:30 AM or after 5:00 PM. Carry refillable water bottles and place shaded water bowls for birds."
+      }
+    };
+
+    function selectCity(cityKey) {
+      const city = PAKISTAN_CITIES[cityKey];
+      if (!city) return;
+
+      document.querySelectorAll('.city-selector-btn').forEach(btn => {
+        btn.className = "city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition";
+      });
+      const activeBtn = document.getElementById(`city-tab-${cityKey}`);
+      if (activeBtn) {
+        activeBtn.className = "city-selector-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#0F172A] text-white shadow-sm transition";
+      }
+
+      document.getElementById('city-province-label').textContent = city.province;
+      document.getElementById('city-title-display').textContent = city.title;
+      document.getElementById('city-ambient-val').textContent = city.ambient;
+      document.getElementById('city-humidity-val').textContent = city.humidity;
+      document.getElementById('city-feelslike-val').textContent = city.feelsLike;
+
+      const badge = document.getElementById('city-ndma-badge');
+      badge.textContent = city.alertLevel;
+      badge.className = `px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider border ${city.alertBadgeClass}`;
+
+      document.getElementById('city-stress-label').textContent = city.stressLabel;
+      document.getElementById('city-stress-bar').style.width = city.stressWidth;
+      document.getElementById('city-vulnerable-text').textContent = city.vulnerable;
+      document.getElementById('city-guidance-text').textContent = city.guidance;
+    }
+
+    // ---------------------------------------------------------------------
+    // 2. ROTHFUSZ HEAT INDEX & PERSONAL RISK CALCULATOR
+    // ---------------------------------------------------------------------
+    function updateHeatCalculator() {
+      const tempC = parseFloat(document.getElementById('calc-temp-slider').value);
+      const rh = parseFloat(document.getElementById('calc-humidity-slider').value);
+      const exposureOffset = parseFloat(document.getElementById('calc-exposure-group').value);
+
+      document.getElementById('calc-temp-readout').textContent = `${tempC}°C`;
+      document.getElementById('calc-humidity-readout').textContent = `${rh}%`;
+
+      // Convert Celsius to Fahrenheit for Rothfusz regression equation
+      const T = (tempC * 9 / 5) + 32;
+      let hiF = 0.5 * (T + 61.0 + ((T - 68.0) * 1.2) + (rh * 0.094));
+
+      if (hiF >= 80) {
+        hiF = -42.379 + 2.04901523 * T + 10.14333127 * rh
+              - 0.22475541 * T * rh - 0.00683783 * T * T
+              - 0.05481717 * rh * rh + 0.00122874 * T * T * rh
+              + 0.00085282 * T * rh * rh - 0.00000199 * T * T * rh * rh;
+
+        // Low-humidity adjustment
+        if (rh < 13 && T >= 80 && T <= 112) {
+          hiF -= ((13 - rh) / 4) * Math.sqrt((17 - Math.abs(T - 95)) / 17);
+        }
+        // High-humidity adjustment
+        if (rh > 85 && T >= 80 && T <= 87) {
+          hiF += ((rh - 85) / 10) * ((87 - T) / 5);
+        }
+      }
+
+      let effectiveC = Math.round(((hiF - 32) * 5 / 9) + exposureOffset);
+      if (effectiveC < tempC) effectiveC = Math.round(tempC + exposureOffset);
+      const effectiveF = Math.round((effectiveC * 9 / 5) + 32);
+
+      document.getElementById('calc-hi-c').textContent = `${effectiveC}°C`;
+      document.getElementById('calc-hi-f').textContent = `(${effectiveF}°F)`;
+
+      const badge = document.getElementById('calc-risk-badge');
+      const hiDisplay = document.getElementById('calc-hi-c');
+      const meterBar = document.getElementById('calc-risk-meter-bar');
+      const hydrationText = document.getElementById('calc-hydration-text');
+      const restText = document.getElementById('calc-rest-text');
+      const precautionBox = document.getElementById('calc-precaution-box');
+      const precautionText = document.getElementById('calc-precaution-text');
+
+      const pct = Math.min(100, Math.max(15, Math.round(((effectiveC - 28) / 34) * 100)));
+      meterBar.style.width = `${pct}%`;
+
+      if (effectiveC < 38) {
+        badge.textContent = "Caution";
+        badge.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+        hiDisplay.className = "font-display font-extrabold text-4xl sm:text-5xl text-emerald-400";
+        hydrationText.textContent = "500ml water/hr (2 glasses) during outdoor activity";
+        restText.textContent = "10-minute shade break every 60 minutes";
+        precautionBox.className = "rounded-2xl bg-emerald-950/60 border border-emerald-500/40 p-4 sm:p-5";
+        precautionText.className = "text-sm text-emerald-100 leading-relaxed";
+        precautionText.innerHTML = "<strong>Medical Precaution:</strong> Fatigue is possible with prolonged sun exposure. Wear light-colored breathable cotton clothing and stay consistently hydrated.";
+      } else if (effectiveC < 45) {
+        badge.textContent = "Extreme Caution";
+        badge.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40";
+        hiDisplay.className = "font-display font-extrabold text-4xl sm:text-5xl text-amber-400";
+        hydrationText.textContent = "750ml water/hr + 1 WHO ORS sachet every 2 hours";
+        restText.textContent = "15-minute shaded rest every 45 minutes outdoors";
+        precautionBox.className = "rounded-2xl bg-amber-950/60 border border-amber-500/40 p-4 sm:p-5";
+        precautionText.className = "text-sm text-amber-100 leading-relaxed";
+        precautionText.innerHTML = "<strong>Medical Precaution:</strong> Heat cramps and heat exhaustion are possible. Shield your head and neck with a damp cloth and limit sun exposure between 11:00 AM and 4:00 PM.";
+      } else if (effectiveC < 52) {
+        badge.textContent = "Danger";
+        badge.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wider bg-orange-500/20 text-orange-300 border border-orange-500/40";
+        hiDisplay.className = "font-display font-extrabold text-4xl sm:text-5xl text-[#EA580C]";
+        hydrationText.textContent = "750ml – 1,000ml water/hr + 1 WHO ORS packet";
+        restText.textContent = "15-minute shaded rest every 30 minutes outdoors";
+        precautionBox.className = "rounded-2xl bg-orange-950/60 border border-orange-500/40 p-4 sm:p-5";
+        precautionText.className = "text-sm text-orange-100 leading-relaxed";
+        precautionText.innerHTML = "<strong>Medical Precaution:</strong> High risk of heat cramps and heat exhaustion. Suspend strenuous outdoor labor, cool wrists and neck with cold water, and monitor for dizziness or nausea.";
+      } else {
+        badge.textContent = "Extreme Danger";
+        badge.className = "px-4 py-2 rounded-2xl text-xs sm:text-sm font-extrabold uppercase tracking-wider bg-[#DC2626] text-white border border-red-400 animate-pulse";
+        hiDisplay.className = "font-display font-extrabold text-4xl sm:text-5xl text-red-400";
+        hydrationText.textContent = "Continuous electrolyte (ORS) + cool water sips";
+        restText.textContent = "Halt outdoor exposure immediately • Stay indoors";
+        precautionBox.className = "rounded-2xl bg-red-950/75 border border-red-500/50 p-4 sm:p-5";
+        precautionText.className = "text-sm text-red-100 leading-relaxed";
+        precautionText.innerHTML = "<strong>CRITICAL ALERT:</strong> Heatstroke is imminent! Move indoors immediately, apply ice/wet towels to neck, armpits, and groin, and call <strong>Rescue 1122</strong> if confusion or loss of sweating occurs.";
+      }
+    }
+
+    // ---------------------------------------------------------------------
+    // 3. HEAT EXHAUSTION VS. HEATSTROKE INTERACTIVE FIRST-AID SWITCHER
+    // ---------------------------------------------------------------------
+    const FIRST_AID_DATA = {
+      exhaustion: {
+        bannerClass: "bg-orange-50 border-orange-200 text-[#0F172A]",
+        badgeText: "WARNING STAGE • CORE TEMP < 40°C (104°F)",
+        badgeClass: "bg-[#EA580C] text-white",
+        title: "Heat Exhaustion",
+        summary: "Occurs when the body loses excessive water and salt through heavy sweating. Treatable on-site if cooled and rehydrated promptly.",
+        symptoms: [
+          "Heavy, profuse sweating with cool, pale, and clammy skin",
+          "Fast, weak pulse and rapid, shallow breathing",
+          "Dizziness, headache, nausea, weakness, or painful muscle cramps",
+          "Core body temperature elevated but typically below 40°C (104°F)"
+        ],
+        steps: [
+          "Move the person immediately to a shaded, cool, or ventilated area.",
+          "Loosen tight clothing and apply cool wet cloths to the forehead, neck, and wrists.",
+          "Provide slow, steady sips of cool water or WHO ORS if fully conscious.",
+          "Seek medical evaluation if vomiting occurs or symptoms persist beyond 30 minutes."
+        ]
+      },
+      heatstroke: {
+        bannerClass: "bg-red-50 border-red-200 text-[#0F172A]",
+        badgeText: "MEDICAL EMERGENCY • CORE TEMP > 40°C (104°F)",
+        badgeClass: "bg-[#DC2626] text-white",
+        title: "Heatstroke (Call 1122 Immediately)",
+        summary: "A life-threatening failure of the body's thermoregulatory system. Rapid external cooling within the first 15 minutes prevents brain and organ damage.",
+        symptoms: [
+          "Core body temperature surging above 40°C (104°F)",
+          "Hot, red, dry skin (or sudden cessation of sweating)",
+          "Confusion, slurred speech, agitation, seizures, or loss of consciousness",
+          "Throbbing headache and rapid, strong, bounding pulse"
+        ],
+        steps: [
+          "CALL RESCUE 1122 IMMEDIATELY — Do not wait for symptoms to subside.",
+          "Move to shade and cool aggressively: apply ice packs or cold wet towels to neck, armpits, and groin.",
+          "Pour cool water continuously over the body and fan vigorously until paramedics arrive.",
+          "CRITICAL: Do NOT force fluids into the mouth of a confused or unconscious person."
+        ]
+      }
+    };
+
+    function selectFirstAidTab(type) {
+      const btnEx = document.getElementById('aid-tab-exhaustion');
+      const btnHs = document.getElementById('aid-tab-heatstroke');
+
+      if (type === 'exhaustion') {
+        btnEx.className = "py-3 px-4 rounded-xl font-display font-bold text-xs sm:text-sm transition bg-[#EA580C] text-white shadow-sm";
+        btnHs.className = "py-3 px-4 rounded-xl font-display font-bold text-xs sm:text-sm transition text-slate-700 hover:text-[#0F172A]";
+      } else {
+        btnHs.className = "py-3 px-4 rounded-xl font-display font-bold text-xs sm:text-sm transition bg-[#DC2626] text-white shadow-sm";
+        btnEx.className = "py-3 px-4 rounded-xl font-display font-bold text-xs sm:text-sm transition text-slate-700 hover:text-[#0F172A]";
+      }
+
+      const item = FIRST_AID_DATA[type];
+      const panel = document.getElementById('first-aid-panel');
+      panel.innerHTML = `
+        <div class="p-5 rounded-2xl border ${item.bannerClass}">
+          <span class="inline-block px-3 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider ${item.badgeClass} mb-2">
+            ${item.badgeText}
+          </span>
+          <h3 class="font-display font-extrabold text-xl sm:text-2xl text-[#0F172A]">${item.title}</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">${item.summary}</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="bg-[#FAFAF9] p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-display font-bold text-xs uppercase tracking-wider text-slate-800 mb-3">Clinical Signs &amp; Symptoms</h4>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600">
+              ${item.symptoms.map(sym => `<li class="flex items-start gap-2"><span class="text-[#EA580C] font-extrabold">•</span><span>${sym}</span></li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="bg-[#FAFAF9] p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-display font-bold text-xs uppercase tracking-wider text-[#059669] mb-3">Immediate Response Steps</h4>
+            <ol class="space-y-2.5 text-xs sm:text-sm text-slate-700">
+              ${item.steps.map((step, i) => `<li class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-emerald-100 text-[#059669] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">${i + 1}</span><span>${step}</span></li>`).join('')}
+            </ol>
+          </div>
+        </div>
+      `;
+    }
+
+    // ---------------------------------------------------------------------
+    // 4. ROADMAP FILTERING & PROPOSAL CUSTOMIZER (LOCALSTORAGE)
+    // ---------------------------------------------------------------------
+    function filterRoadmap(phase) {
+      document.querySelectorAll('.roadmap-filter-btn').forEach(btn => {
+        btn.className = "roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-50 transition";
+      });
+      const activeBtn = document.getElementById(`roadmap-btn-${phase}`);
+      if (activeBtn) {
+        activeBtn.className = "roadmap-filter-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-[#EA580C] text-white shadow-sm transition";
+      }
+
+      document.querySelectorAll('.roadmap-card').forEach(card => {
+        if (phase === 'all' || card.getAttribute('data-phase') === phase) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    const DEFAULT_PROPOSAL = {
+      university: "University Community Engagement Program",
+      department: "Department of Civic & Environmental Studies",
+      course: "Community Engagement • Faculty Supervisor",
+      team: "Student Civic Action Group (UN SDG 13)",
+      locality: "Urban & Peri-Urban Communities, Pakistan"
+    };
+
+    function openProposalModal() {
+      const saved = JSON.parse(localStorage.getItem('heatshield_proposal_v1') || 'null') || DEFAULT_PROPOSAL;
+      document.getElementById('cfg-university').value = saved.university;
+      document.getElementById('cfg-department').value = saved.department;
+      document.getElementById('cfg-course').value = saved.course;
+      document.getElementById('cfg-team').value = saved.team;
+      document.getElementById('cfg-locality').value = saved.locality;
+
+      const modal = document.getElementById('proposal-customizer-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProposalModal() {
+      const modal = document.getElementById('proposal-customizer-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function applyProposalData(data) {
+      const uniDept = `${data.university}${data.department ? ' — ' + data.department : ''}`;
+      document.getElementById('meta-uni-dept').textContent = uniDept;
+      document.getElementById('meta-course-sup').textContent = data.course;
+      document.getElementById('meta-team-members').textContent = data.team;
+      document.getElementById('meta-target-locality').textContent = data.locality;
+
+      document.getElementById('hero-academic-badge').textContent = `${data.university} • Target Locality: ${data.locality}`;
+      document.getElementById('cert-uni-subtitle').textContent = uniDept;
+      document.getElementById('footer-uni-dept').textContent = uniDept;
+      document.getElementById('footer-course-sup').textContent = data.course;
+      document.getElementById('footer-team-members').textContent = `Team: ${data.team}`;
+    }
+
+    function saveProposalConfig(e) {
+      e.preventDefault();
+      const data = {
+        university: document.getElementById('cfg-university').value.trim() || DEFAULT_PROPOSAL.university,
+        department: document.getElementById('cfg-department').value.trim() || DEFAULT_PROPOSAL.department,
+        course: document.getElementById('cfg-course').value.trim() || DEFAULT_PROPOSAL.course,
+        team: document.getElementById('cfg-team').value.trim() || DEFAULT_PROPOSAL.team,
+        locality: document.getElementById('cfg-locality').value.trim() || DEFAULT_PROPOSAL.locality
+      };
+      localStorage.setItem('heatshield_proposal_v1', JSON.stringify(data));
+      applyProposalData(data);
+      closeProposalModal();
+      showToast("Proposal details updated and saved!");
+    }
+
+    function resetProposalConfig() {
+      localStorage.removeItem('heatshield_proposal_v1');
+      applyProposalData(DEFAULT_PROPOSAL);
+      closeProposalModal();
+      showToast("Proposal details reset to default.");
+    }
+
+    // ---------------------------------------------------------------------
+    // 5. COMMUNITY PLEDGE & HIGH-RES PNG CERTIFICATE GENERATOR (CANVAS)
+    // ---------------------------------------------------------------------
+    let totalPledges = 1486;
+
+    function submitCommunityPledge(e) {
+      e.preventDefault();
+      const fullName = document.getElementById('pledge-fullname').value.trim();
+      const city = document.getElementById('pledge-city-select').value;
+      const pledgeAction = document.getElementById('pledge-action-select').value;
+
+      if (!fullName) return;
+
+      totalPledges += 1;
+      document.getElementById('pledge-total-counter').textContent = totalPledges.toLocaleString();
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const verifyId = `HSP-SDG13-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      document.getElementById('cert-display-name').textContent = fullName;
+      document.getElementById('cert-display-city').textContent = city;
+      document.getElementById('cert-display-pledge').textContent = `"${pledgeAction}"`;
+      document.getElementById('cert-display-date').textContent = `Issued: ${dateStr}`;
+      document.getElementById('cert-display-id').textContent = `Verification ID: ${verifyId}`;
+
+      showToast(`Thank you, ${fullName}! Your UN SDG 13 Certificate is ready to download.`);
+    }
+
+    function downloadPngCertificate() {
+      const name = document.getElementById('cert-display-name').textContent;
+      const city = document.getElementById('cert-display-city').textContent;
+      const pledge = document.getElementById('cert-display-pledge').textContent;
+      const dateStr = document.getElementById('cert-display-date').textContent;
+      const verifyId = document.getElementById('cert-display-id').textContent;
+      const uniSubtitle = document.getElementById('cert-uni-subtitle').textContent;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 1400;
+      canvas.height = 980;
+      const ctx = canvas.getContext('2d');
+
+      // Background Fill
+      const grad = ctx.createLinearGradient(0, 0, 1400, 980);
+      grad.addColorStop(0, '#FFFFFF');
+      grad.addColorStop(0.55, '#FAFAF9');
+      grad.addColorStop(1, '#ECFDF5');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1400, 980);
+
+      // Decorative Double Borders
+      ctx.strokeStyle = '#0F172A';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(32, 32, 1336, 916);
+
+      ctx.strokeStyle = '#EA580C';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(52, 52, 1296, 876);
+
+      ctx.strokeStyle = '#059669';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(64, 64, 1272, 852);
+
+      // Top UN SDG 13 Pill Banner
+      ctx.fillStyle = '#059669';
+      ctx.fillRect(515, 100, 370, 46);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 19px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('UN SDG 13 • CLIMATE ACTION', 700, 130);
+
+      // Organization & Subtitle
+      ctx.fillStyle = '#EA580C';
+      ctx.font = 'bold 22px Plus Jakarta Sans, Inter, sans-serif';
+      ctx.fillText('HEATSHIELD PAKISTAN • COMMUNITY ENGAGEMENT INITIATIVE', 700, 205);
+
+      ctx.fillStyle = '#475569';
+      ctx.font = '600 18px Inter, sans-serif';
+      ctx.fillText(uniSubtitle, 700, 238);
+
+      // Certificate Heading
+      ctx.fillStyle = '#0F172A';
+      ctx.font = '800 50px Plus Jakarta Sans, Inter, sans-serif';
+      ctx.fillText('Certificate of Community Climate Action', 700, 315);
+
+      ctx.fillStyle = '#64748B';
+      ctx.font = '24px Inter, sans-serif';
+      ctx.fillText('This certificate is proudly presented to', 700, 380);
+
+      // Recipient Name
+      ctx.fillStyle = '#059669';
+      ctx.font = '800 62px Plus Jakarta Sans, Inter, sans-serif';
+      ctx.fillText(name, 700, 468);
+
+      // Signature Underline
+      ctx.strokeStyle = '#EA580C';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(340, 492);
+      ctx.lineTo(1060, 492);
+      ctx.stroke();
+
+      // City & Pledge Text
+      ctx.fillStyle = '#334155';
+      ctx.font = '600 24px Inter, sans-serif';
+      ctx.fillText(`From ${city}, for making the civic commitment to:`, 700, 548);
+
+      ctx.fillStyle = '#0F172A';
+      ctx.font = 'italic bold 24px Inter, sans-serif';
+      ctx.fillText(pledge, 700, 595);
+
+      ctx.fillStyle = '#475569';
+      ctx.font = '21px Inter, sans-serif';
+      ctx.fillText('Advancing grassroots heatwave resilience under UN Sustainable Development Goal 13.', 700, 645);
+
+      // Draw Circular UN SDG 13 Verification Seal in Center-Bottom
+      ctx.save();
+      ctx.translate(700, 775);
+      ctx.beginPath();
+      ctx.arc(0, 0, 54, 0, Math.PI * 2);
+      ctx.fillStyle = '#ECFDF5';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#059669';
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 44, 0, Math.PI * 2);
+      ctx.setLineDash([5, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = '#059669';
+      ctx.font = 'bold 14px Inter, sans-serif';
+      ctx.fillText('VERIFIED', 0, -6);
+      ctx.font = 'bold 13px Inter, sans-serif';
+      ctx.fillText('UN SDG 13', 0, 14);
+      ctx.restore();
+
+      // Left Footer Metadata
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#0F172A';
+      ctx.font = 'bold 20px Inter, sans-serif';
+      ctx.fillText(dateStr, 110, 825);
+      ctx.fillStyle = '#64748B';
+      ctx.font = '18px monospace';
+      ctx.fillText(verifyId, 110, 855);
+
+      // Right Footer Signature
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#0F172A';
+      ctx.font = 'bold 20px Plus Jakarta Sans, Inter, sans-serif';
+      ctx.fillText('HeatShield Pakistan Project Team', 1290, 825);
+      ctx.fillStyle = '#64748B';
+      ctx.font = '18px Inter, sans-serif';
+      ctx.fillText('Community Engagement & Climate Resilience', 1290, 855);
+
+      // Trigger PNG File Download
+      const link = document.createElement('a');
+      link.download = `HeatShield-UN-SDG13-Certificate-${name.replace(/\s+/g, '-')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
+      showToast("High-resolution PNG Certificate downloaded!");
+    }
+
+    // ---------------------------------------------------------------------
+    // 6. FAQ ACCORDION, SOS MODAL, MOBILE DRAWER & CLIPBOARD UTILITIES
+    // ---------------------------------------------------------------------
+    function toggleFaq(index) {
+      const body = document.getElementById(`faq-body-${index}`);
+      const icon = document.getElementById(`faq-icon-${index}`);
+      const isHidden = body.classList.contains('hidden');
+
+      if (isHidden) {
+        body.classList.remove('hidden');
+        icon.textContent = '−';
+      } else {
+        body.classList.add('hidden');
+        icon.textContent = '+';
+      }
+    }
+
+    function openSosModal() {
+      const modal = document.getElementById('sos-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeSosModal() {
+      const modal = document.getElementById('sos-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function toggleMobileNav() {
+      document.getElementById('mobile-nav-drawer').classList.toggle('hidden');
+    }
+
+    function closeMobileNav() {
+      document.getElementById('mobile-nav-drawer').classList.add('hidden');
+    }
+
+    function copyNumber(num, label) {
+      const temp = document.createElement('input');
+      temp.value = num;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast(`Copied ${label} Helpline: ${num}`);
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('civic-toast');
+      document.getElementById('civic-toast-text').textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3400);
+    }
+
+    window.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('sos-modal')) closeSosModal();
+      if (e.target === document.getElementById('proposal-customizer-modal')) closeProposalModal();
+    });
+
+    // Initialize All Dynamic Modules on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      selectCity('lahore');
+      updateHeatCalculator();
+      selectFirstAidTab('exhaustion');
+
+      const savedProposal = JSON.parse(localStorage.getItem('heatshield_proposal_v1') || 'null');
+      if (savedProposal) {
+        applyProposalData(savedProposal);
+      }
+    });
+  </script>
+</body>
+</html>
